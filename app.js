@@ -5,7 +5,9 @@ var express        = require('express');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var cors           = require('cors');
+var cors = require('cors');
+var mongoose = require('mongoose');
+
 
 // configuration ===========================================
 
@@ -14,10 +16,31 @@ process.env.PWD = process.cwd()
 
 // set our port
 var port = process.env.PORT || 8080; 
+// Set native promises as mongoose promise
+// mongoose.Promise = global.Promise;
+// // const mongoUrl =
+// //   process.env.MONGO_URL ||
+// //   "mongodb+srv://Varsha:varsha22#@cluster0.9lusy.mongodb.net/node_deploy";
+// // MongoDB Connection
+// if (process.env.NODE_ENV !== 'test') {
+//   mongoose.connect(process.env.MONGO_URL, (error) => {
+//     if (error) {
+//       console.error("Please make sure Mongodb is installed and running!"); // eslint-disable-line no-console
+//       throw error;
+//     }
+
+//     // feed some dummy data in DB.
+//     dummyData();
+//   });
+// }
 
 // connect to our mongoDB database 
 // (uncomment after you enter in your own credentials in config/db.js)
-// mongoose.connect(db.url); 
+// mongoose.connect(process.env.MONGO_URL); 
+mongoose.connect(process.env.MONGO_URL, {
+  useMongoClient: true,
+  /* other options */
+});
 
 // const MongoClient = require("mongodb").MongoClient;
 // const uri =
